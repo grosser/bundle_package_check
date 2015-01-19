@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    pru (0.1.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pru
