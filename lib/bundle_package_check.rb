@@ -14,7 +14,7 @@ module BundlePackageCheck
 
     def expected_from_lock(all)
       lock = File.read("Gemfile.lock")
-      expected = lock.scan(/(?:revision: (\S+)\n  specs:\n|^)    (\S+) \((\S+)\)/)
+      expected = lock.scan(/(?:revision: (\S+)(?:\n  .*)*\n  specs:\n|^)    (\S+) \((\S+)\)/)
       expected.reject! { |x| x[0] } unless all
       expected.map! do |revision, name, version|
         identifier = revision ? revision[0...12] : "#{version}.gem"

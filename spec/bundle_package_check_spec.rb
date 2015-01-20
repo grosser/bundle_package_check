@@ -69,7 +69,7 @@ describe BundlePackageCheck do
     end
 
     it "is not ok when :all is false" do
-      BundlePackageCheck.errors.should == ["Unnecessary vendor/cache/parallel-6e7afcf22982"]
+      BundlePackageCheck.errors.should == ["Unnecessary vendor/cache/parallel-6e7afcf22982", "Unnecessary vendor/cache/testrbl-8299baac0c38"]
     end
   end
 end
