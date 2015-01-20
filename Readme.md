@@ -1,4 +1,5 @@
-Check if all gems you need are packaged
+Check if all gems you need are packaged / vendored,
+super fast and without bundler.
 
 Install
 =======
@@ -11,7 +12,21 @@ Usage
 =====
 
 ```Ruby
-CODE EXAMPLE
+error = BundlePackageCheck.errors
+if errors.any?
+  puts errors
+  abort
+end
+==>
+Missing vendor/cache/xxx-123.gem
+Unnecessary vendor/cache/yyy-123.gem
+```
+
+check with `:all` mode to see if git dependencies are properly packaged
+
+```Ruby
+error = BundlePackageCheck.errors all: true
+raise errors.inspect if errors.any?
 ```
 
 Author

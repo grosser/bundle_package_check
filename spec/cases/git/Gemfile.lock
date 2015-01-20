@@ -1,0 +1,17 @@
+GIT
+  remote: https://github.com/grosser/parallel.git
+  revision: 6e7afcf229822f0af72eb07911fcaa480ae73d55
+  specs:
+    parallel (1.3.3)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    pru (0.1.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  parallel!
+  pru

@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+gem "pru"
+gem "parallel", git: "https://github.com/grosser/parallel.git"

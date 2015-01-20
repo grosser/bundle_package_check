@@ -7,10 +7,12 @@ describe BundlePackageCheck do
     result
   end
 
+  let(:folder) { "simple" }
+
   around do |example|
     Dir.mktmpdir do |dir|
       Dir.chdir(dir) do
-        sh "cp -R #{Bundler.root}/spec/cases/simple/* #{dir}"
+        sh "cp -R #{Bundler.root}/spec/cases/#{folder}/* #{dir}"
         example.call
       end
     end
@@ -22,28 +24,52 @@ describe BundlePackageCheck do
 
   describe "with simple gemfile" do
     it "knows when everything is ok" do
-      BundlePackageCheck.check.should == nil
+      BundlePackageCheck.errors.should == []
     end
 
     it "knows when something is missing" do
       sh "rm vendor/cache/pru-*"
-      BundlePackageCheck.check.should == ["Missing vendor/cache/pru-0.1.8.gem"]
+      BundlePackageCheck.errors.should == ["Missing vendor/cache/pru-0.1.8.gem"]
     end
 
     it "knows when something is missing" do
       sh "rm vendor/cache/pru-*"
-      BundlePackageCheck.check.should == ["Missing vendor/cache/pru-0.1.8.gem"]
+      BundlePackageCheck.errors.should == ["Missing vendor/cache/pru-0.1.8.gem"]
     end
 
     it "knows when there is extra" do
       sh "cp vendor/cache/pru-* vendor/cache/other-1.2.3.gem"
-      BundlePackageCheck.check.should == ["Unnecessary vendor/cache/other-1.2.3.gem"]
+      BundlePackageCheck.errors.should == ["Unnecessary vendor/cache/other-1.2.3.gem"]
     end
 
     it "knows when there is extra and missing" do
       sh "cp vendor/cache/pru-* vendor/cache/other-1.2.3.gem"
       sh "rm vendor/cache/pru-*"
-      BundlePackageCheck.check.should == ["Missing vendor/cache/pru-0.1.8.gem", "Unnecessary vendor/cache/other-1.2.3.gem"]
+      BundlePackageCheck.errors.should == ["Missing vendor/cache/pru-0.1.8.gem", "Unnecessary vendor/cache/other-1.2.3.gem"]
+    end
+  end
+
+  describe "with unpacked git dependencies" do
+    let(:folder) { "git" }
+
+    it "knows everything is ok" do
+      BundlePackageCheck.errors.should == []
+    end
+
+    it "is not ok when :all is requested" do
+      BundlePackageCheck.errors(all: true).should == ["Missing vendor/cache/parallel-6e7afcf22982"]
+    end
+  end
+
+  describe "with packed git dependencies" do
+    let(:folder) { "git_packed" }
+
+    it "knows everything is ok" do
+      BundlePackageCheck.errors(all: true).should == []
+    end
+
+    it "is not ok when :all is false" do
+      BundlePackageCheck.errors.should == ["Unnecessary vendor/cache/parallel-6e7afcf22982"]
     end
   end
 end
