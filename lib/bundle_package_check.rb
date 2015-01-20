@@ -2,7 +2,7 @@ module BundlePackageCheck
   class << self
     def errors(all: false)
       expected = expected_from_lock(all)
-      actual = Dir["vendor/cache/*"]
+      actual = Dir["vendor/cache/*"].sort
 
       errors = []
       errors += (expected - actual).map { |f| "Missing #{f}" }
