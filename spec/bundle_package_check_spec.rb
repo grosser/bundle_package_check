@@ -37,15 +37,21 @@ describe BundlePackageCheck do
       BundlePackageCheck.errors.should == ["Missing vendor/cache/pru-0.1.8.gem"]
     end
 
-    it "knows when there is extra" do
-      sh "cp vendor/cache/pru-* vendor/cache/other-1.2.3.gem"
-      BundlePackageCheck.errors.should == ["Unnecessary vendor/cache/other-1.2.3.gem"]
-    end
+    context "with extra" do
+      before { sh "cp vendor/cache/pru-* vendor/cache/other-1.2.3.gem" }
 
-    it "knows when there is extra and missing" do
-      sh "cp vendor/cache/pru-* vendor/cache/other-1.2.3.gem"
-      sh "rm vendor/cache/pru-*"
-      BundlePackageCheck.errors.should == ["Missing vendor/cache/pru-0.1.8.gem", "Unnecessary vendor/cache/other-1.2.3.gem"]
+      it "knows when there is extra" do
+        BundlePackageCheck.errors.should == ["Unnecessary vendor/cache/other-1.2.3.gem"]
+      end
+
+      it "ignores extra with ignore_extra" do
+        BundlePackageCheck.errors(ignore_extra: true).should == []
+      end
+
+      it "knows when there is extra and missing" do
+        sh "rm vendor/cache/pru-*"
+        BundlePackageCheck.errors.should == ["Missing vendor/cache/pru-0.1.8.gem", "Unnecessary vendor/cache/other-1.2.3.gem"]
+      end
     end
   end
 

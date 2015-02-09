@@ -29,6 +29,13 @@ error = BundlePackageCheck.errors all: true
 raise errors.inspect if errors.any?
 ```
 
+with `:ignore_extra` extra dependencies do not cause errors
+
+```Ruby
+error = BundlePackageCheck.errors ignore_extra: true
+```
+
+
 Author
 ======
 [Michael Grosser](http://grosser.it)<br/>
