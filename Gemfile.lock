@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bundle_package_check (0.1.1)
+    bundle_package_check (0.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -30,3 +30,6 @@ DEPENDENCIES
   bundle_package_check!
   rake
   rspec
+
+BUNDLED WITH
+   1.10.5
