@@ -1,0 +1,19 @@
+PATH
+  remote: ../foo
+  specs:
+    foo (1.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    pru (0.1.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  foo!
+  pru
+
+BUNDLED WITH
+   1.10.5

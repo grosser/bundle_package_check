@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+gem "pru"
+gem "foo", path: '../foo' # naming the folder anything else will not work :(

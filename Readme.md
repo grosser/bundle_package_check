@@ -25,15 +25,22 @@ Unnecessary vendor/cache/yyy-123.gem
 check with `:all` mode to see if git dependencies are properly packaged
 
 ```Ruby
-error = BundlePackageCheck.errors all: true
+errors = BundlePackageCheck.errors all: true
 raise errors.inspect if errors.any?
 ```
 
 with `:ignore_extra` extra dependencies do not cause errors
 
 ```Ruby
-error = BundlePackageCheck.errors ignore_extra: true
+errors = BundlePackageCheck.errors ignore_extra: true
 ```
+
+with `:ignore_path` missing path gems do not cause errors
+
+```Ruby
+errors = BundlePackageCheck.errors ignore_path: true
+```
+
 
 
 Author

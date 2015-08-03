@@ -78,4 +78,24 @@ describe BundlePackageCheck do
       BundlePackageCheck.errors.should == ["Unnecessary vendor/cache/parallel-6e7afcf22982", "Unnecessary vendor/cache/testrbl-8299baac0c38"]
     end
   end
+
+  describe "with path dependencies" do
+    let(:folder) { "path" }
+
+    it "knows everything is ok" do
+      BundlePackageCheck.errors(all: true).should == []
+    end
+
+    describe "when path is missing" do
+      before { sh "rm -rf vendor/cache/foo" }
+
+      it "is not ok" do
+        BundlePackageCheck.errors(all: true).should == ["Missing vendor/cache/foo"]
+      end
+
+      it "is ok with ignore_path" do
+        BundlePackageCheck.errors(all: true, ignore_path: true).should == []
+      end
+    end
+  end
 end
