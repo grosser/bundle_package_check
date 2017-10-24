@@ -100,4 +100,14 @@ describe BundlePackageCheck do
       end
     end
   end
+
+  describe "with gems.rb" do
+    before do
+      sh "mv Gemfile gems.rb && mv Gemfile.lock gems.locked"
+    end
+
+    it "knows when everything is ok" do
+      BundlePackageCheck.errors.should == []
+    end
+  end
 end
