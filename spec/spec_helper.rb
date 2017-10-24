@@ -1,4 +1,8 @@
 require "bundler/setup"
+
+require "single_cov"
+SingleCov.setup :rspec
+
 require "bundle_package_check/version"
 require "bundle_package_check"
 require "tmpdir"

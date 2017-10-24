@@ -1,5 +1,7 @@
 require "spec_helper"
 
+SingleCov.covered!
+
 describe BundlePackageCheck do
   def sh(command, options={})
     result = Bundler.with_clean_env { `#{command} #{"2>&1" unless options[:keep_output]}` }
