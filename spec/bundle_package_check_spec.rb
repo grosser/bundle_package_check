@@ -1,5 +1,7 @@
 require "spec_helper"
 
+SingleCov.covered!
+
 describe BundlePackageCheck do
   def sh(command, options={})
     result = Bundler.with_clean_env { `#{command} #{"2>&1" unless options[:keep_output]}` }
@@ -96,6 +98,16 @@ describe BundlePackageCheck do
       it "is ok with ignore_path" do
         BundlePackageCheck.errors(all: true, ignore_path: true).should == []
       end
+    end
+  end
+
+  describe "with gems.rb" do
+    before do
+      sh "mv Gemfile gems.rb && mv Gemfile.lock gems.locked"
+    end
+
+    it "knows when everything is ok" do
+      BundlePackageCheck.errors.should == []
     end
   end
 end

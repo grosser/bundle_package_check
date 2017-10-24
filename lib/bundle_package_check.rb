@@ -23,7 +23,7 @@ module BundlePackageCheck
     end
 
     def expected_from_lock(all, ignore_path)
-      lock = File.read("Gemfile.lock")
+      lock = (File.exist?("gems.locked") ? File.read("gems.locked") : File.read("Gemfile.lock"))
       path_gems = path_gems(lock)
       expected = lock.scan(/(?:revision: (\S+)(?:\n  .*)*\n  specs:\n|^)    (\S+) \((\S+)\)/)
       expected.reject! { |revision, _, _| revision } unless all
